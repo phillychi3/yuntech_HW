@@ -24,6 +24,8 @@
         }
         //check number and passwords
         foreach($data as $line){
+            echo $line['number'];
+            echo $line['passwords'];
             if($line['number'] == $number && $line['passwords'] == $passwords){
                 $_SESSION["login"] = true;
                 $_SESSION['number'] = $number;
@@ -41,6 +43,7 @@
                 break;
             }
         }
+        print_r($_SESSION);
         //login fail
         if($number != null && $passwords != null && $_SESSION["login"] != true){
             $_SESSION["login"] = false;
