@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+    </head>
+    <body>
+        <h1>系統登入</h1>
+        <h3>輸入帳號密碼</h3>
+        <form>
+            帳號：<input type="text" name="account" /><br />
+            密碼：<input type="password" name="password" /><br />
+            <input type="button" value="登入" onclick="sendr()"/>
+            <input type="reset" value="重設" />
+        <form>
+        <h1>非同步訊息</h1>
+        <p>接收ajax訊息</p>
+        <div id="msg">
+            
+        </div>
+        <script>    
+            function sendr(){
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "backend.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                var account = document.getElementsByName("account")[0].value;
+                var password = document.getElementsByName("password")[0].value;
+                var data = "account=" + account + "&password=" + password;
+                xhr.send(data);
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        document.getElementById("msg").innerHTML = xhr.responseText;
+                    }
+                }
+
+            }
+        </script> 
+    </body>
+</html>
