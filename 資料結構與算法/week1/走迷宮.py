@@ -1,5 +1,5 @@
 # 走迷宮
-
+# 自帶混淆:P lol
 import sys
 str = sys.stdin.readlines()
 str = [s.strip('\n') for s in str]
