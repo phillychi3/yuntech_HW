@@ -13,5 +13,10 @@
             "name": "testdb",
             "database": "yuntech"
         }
-    ]
+    ],
+    "files.associations": {
+        "*.ejs": "html",
+        "xstring": "c",
+        "xutility": "c"
+    }
 }
