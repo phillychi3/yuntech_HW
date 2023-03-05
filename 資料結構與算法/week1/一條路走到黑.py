@@ -2,11 +2,20 @@ import sys
 str = sys.stdin.readlines()
 str = [s.strip('\n') for s in str]
 
+# str = .#####
+# .#####
+# .#####
+# .#####
+# ......
+
+#str = ['6 5',  '.#####', '.#####', '.#####', '.#####', '......']
+
+
 setting = str[0].split(' ')
 
-# megon = []
-# for i in range(int(setting[1])):
-#     megon.append(list(str[i+1]))
+megon = []
+for i in range(int(setting[1])):
+    megon.append(list(str[i+1]))
 
 # # 走迷宮 只有一條路 道路是'.' 障礙物是'#'
 
@@ -55,3 +64,22 @@ setting = str[0].split(' ')
     
 # walk_megon(0, 0)
 # print(steps)
+
+
+megon = []
+for i in range(int(setting[1])):
+    megon.append(list(str[i+1]))
+
+all = 0
+for i in range(int(setting[1])):
+    for o in range(int(setting[0])):
+        if megon[i][o] == '.':
+            if i+1 < int(setting[1]) and megon[i+1][o] == '.':
+                all+=1
+            elif i-1 >= 0 and megon[i-1][o] == '.':
+                all+=1
+            elif o+1 < int(setting[0]) and megon[i][o+1] == '.':
+                all+=1
+            elif o-1 >= 0 and megon[i][o-1] == '.':
+                all+=1
+print(all-1)
