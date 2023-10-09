@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week2\\week2.csproj": {}
+    "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week3\\week3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week2\\week2.csproj": {
+    "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week3\\week3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week2\\week2.csproj",
-        "projectName": "week2",
-        "projectPath": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week2\\week2.csproj",
+        "projectUniqueName": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week3\\week3.csproj",
+        "projectName": "week3",
+        "projectPath": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week3\\week3.csproj",
         "packagesPath": "C:\\Users\\phill\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week2\\obj\\",
+        "outputPath": "C:\\Users\\phill\\OneDrive\\Documents\\coed_thing\\yuntech\\元件軟體發展技術\\week3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\phill\\AppData\\Roaming\\NuGet\\NuGet.Config",
