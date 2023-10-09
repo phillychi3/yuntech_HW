@@ -1,0 +1,74 @@
+Q1.
+Use the find_root function in Figure 4-3 to print the sum of approximations 
+to the square root of 25, the cube root of -8, and the fourth root of 16. Use 0.001 as epsilon.
+
+Q2.
+Write a function is_in that accepts two strings as arguments and returns True 
+if either string occurs anywhere in the other, and False otherwise. 
+Hint: you might want to use the built-in str operator in.
+
+Q3.
+Write a function to test is_in
+
+Q4.
+Write a function mult that accepts either one or two ints as arguments. If called with two arguments, the function
+prints the product of the two arguments. If called with one argument, it prints that argument.
+
+Q5.
+Using the algorithm of Figure 3-6, write a function that satisfies the specification
+
+def log(x, base, epsilon):
+ """Assumes x and epsilon int or float, base an int,
+ x > 1, epsilon > 0 & power >= 1
+ Returns float y such that base**y is within epsilon
+of x."""
+
+Q6.
+Write a lambda expression that has two numeric parameters. 
+If the second argument equals zero, it should return None.
+ Otherwise it should return the value of dividing the first argument by the second argument. 
+Hint: use a conditional expression.
+
+Q7.
+What does s.find(sub) return if sub does not occur in s?
+
+Q8.
+Use find to implement a function satisfying the specification
+
+def find_last(s, sub):
+ """s and sub are non-empty strings
+ Returns the index of the last occurrence of sub in s.
+ Returns None if sub does not occur in s"""
+
+Q1.
+使用圖 4-3 中的 find_root 函數打印 25 的平方根、-8 的立方根和 16 的四次根的近似總和。使用 0.001 作為 epsilon。
+
+Q2.
+編寫一個函數is_in，該函數接受兩個字串作為參數，如果其中一個字串出現在另一個字串中的任何位置，則返回 True，否則返回 False。
+
+Q4.
+編寫一個函數 mult，它接受一個或兩個整數作為參數。如果輸入兩個參數的話，
+該函數打印兩個參數的乘積。 如果輸入一個參數的話，它會打印該參數。
+
+Q5.
+使用圖 3-6 的算法，編寫一個滿足規範的函數
+
+def log(x, base, epsilon):
+假設 x必須大於1，epsilon必須大於0，次方數必須大於等於1
+則 回傳 浮點數 y，使base**y 在 x 的 epsilon內
+
+Q6.
+編寫一個有兩個數字參數的 lambda 表達式。
+如果第二個參數等於 0，它應該返回 None。
+  否則它應該返回第一個參數除以第二個參數的值。
+提示：使用條件表達式。
+
+Q7.
+利用find函數查找字串是否有該個字符，測試如果沒有字符會輸出甚麼？
+
+Q8.
+使用find函數實現一個滿足規範的函數
+def find_last(s,sub):
+
+回傳 sub 出現在s中的最後一個索引值
+如果沒有的話則返回 
