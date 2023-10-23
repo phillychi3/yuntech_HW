@@ -1,66 +1,75 @@
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
-import copy
+import random
+import os
+
 
 class LLS:
     def __init__(self) -> None:
-        with open('data.csv', 'r', encoding="utf8") as f:
-            data = list(csv.reader(f, delimiter=','))
-        self.citys = np.array(data)
-        self.citys = self.citys[:, 1:].astype(float)
-        np.random.shuffle(self.citys)
+        path = os.path.dirname(os.path.abspath(__file__))
+        with open(path + "./data.csv", "r", encoding="utf8") as f:
+            data = list(csv.reader(f, delimiter=","))
+        self.city_positions = np.array(data)[:, 1:].astype(float)
 
-    def get_distance(self, cyts=None):
+    def get_distance(self, wow):
         distance = 0
-        if cyts is None:
-            for i in range(self.citys.shape[0] - 1):
-                distance += np.sqrt((self.citys[i][0] - self.citys[i + 1][0])**2 + (self.citys[i][1] - self.citys[i + 1][1])**2)
-        else:
-            for i in range(cyts.shape[0] - 1):
-                distance += np.sqrt((cyts[i][0] - cyts[i + 1][0])**2 + (cyts[i][1] - cyts[i + 1][1])**2)
+        for i in range(self.city_positions.shape[0] - 1):
+            city1 = wow[i]
+            city2 = wow[i + 1]
+            x1, y1 = self.city_positions[city1]
+            x2, y2 = self.city_positions[city2]
+            distance += np.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
         return distance
 
-    def run(self, max_iterations=500):
-        mm = max_iterations
-        plt.ion()
-        plt.figure()
-        plt.title('TSP')
-        plt.scatter(self.citys[:, 0], self.citys[:, 1])
-        plt.plot(self.citys[:, 0], self.citys[:, 1])
-        plt.show()
-        plt.pause(0.01)
+    def isbetter(self, new_distance, old_distance):
+        return self.get_distance(new_distance) <= self.get_distance(old_distance)
+
+    def two_opt_swap(self, tour, i, j):
+        new_tour = tour[:i] + tour[i : j + 1][::-1] + tour[j + 1 :]
+        return new_tour
+
+    def randompath(self, path):
+        a = np.random.randint(len(path))
+        while True:
+            b = np.random.randint(len(path))
+            if np.abs(a - b) > 1:
+                break
+        if a > b:
+            return b, a
+        else:
+            return a, b
+
+    def run(self, max_iterations=10000):
+        path = list(range(len(self.city_positions)))
+        best_path = path
+        best_distance = self.get_distance(path)
 
         while max_iterations > 0:
+            i, j = self.randompath(path)
+            new_path = self.two_opt_swap(path, i, j)
+            new_distance = self.get_distance(new_path)
+            if new_distance < best_distance:
+                best_path = new_path
+                best_distance = new_distance
+                print("New best distance:", best_distance)
             max_iterations -= 1
-            current_tour = copy.deepcopy(self.citys)
-            np.random.shuffle(current_tour)
-            current_distance = self.get_distance(current_tour)
 
-            improved = True
-            while improved:
-                improved = False
-                for i in range(current_tour.shape[0] - 1):
-                    for j in range(i + 2, current_tour.shape[0] - 1):
-                        new_tour = copy.deepcopy(current_tour)
-                        new_tour[i + 1:j + 1] = new_tour[i + 1:j + 1][::-1]
-                        new_distance = self.get_distance(new_tour)
+        print("Best Distance:", best_distance)
+        print("Best Path:", best_path)
 
-                        if new_distance < current_distance:
-                            current_tour = new_tour
-                            current_distance = new_distance
-                            improved = True
-
-            if current_distance < self.get_distance(self.citys):
-                self.citys = current_tour
-            plt.clf()
-            plt.title(f'TSP - Iteration {mm - max_iterations}')
-            plt.plot(current_tour[:, 0], current_tour[:, 1])
-            plt.scatter(current_tour[:, 0], current_tour[:, 1])
-            plt.pause(0.001)
-            print(f'Iteration {mm - max_iterations} - Distance: {current_distance}')
-
-        plt.ioff()
+        plt.subplot(111, aspect="equal")
+        plt.plot(
+            self.city_positions[:, 0], self.city_positions[:, 1], "x", color="blue"
+        )
+        for i, city in enumerate(self.city_positions):
+            plt.text(city[0], city[1], str(i))
+        plt.plot(
+            self.city_positions[best_path, 0],
+            self.city_positions[best_path, 1],
+            color="red",
+        )
         plt.show()
+
 
 LLS().run()
