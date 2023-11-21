@@ -56,7 +56,7 @@ public static class Program
         test2.Height=5;
         Console.WriteLine(test1.getArea());
         Console.WriteLine(test2.getArea());
-        
+
 
         Rectangle.ShowNum();
     }
