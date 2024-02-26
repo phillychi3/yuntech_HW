@@ -13,3 +13,4 @@ for x in psg.cut(data):
         out.append(x.word)
 out = list(set(out))
 print(out)
+print(str(len(out)) + "個人名")
