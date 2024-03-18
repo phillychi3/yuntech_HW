@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <title>寵物資料</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 960px;
+        margin: 0 auto;
+      }
+      .form {
+        border: 1px solid #ccc;
+        padding: 20px;
+      }
+      .label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .input {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>寵物資料</h1>
+      </header>
+      <main class="main">
+        <section class="form">
+          <form action="#">
+            <div class="form-group">
+              <label for="name">姓名</label>
+              <input type="text" name="name" class="input" />
+            </div>
+            <div class="form-group">
+              <label for="gender">性別</label>
+              <select name="gender" class="input">
+                <option value="">請選擇</option>
+                <option value="male">男</option>
+                <option value="female">女</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="type">種類</label>
+              <input type="text" name="type" class="input" />
+            </div>
+            <div class="form-group">
+              <label for="breed">品種</label>
+              <input type="text" name="breed" class="input" />
+            </div>
+            <div class="form-group">
+              <label for="food">食物</label>
+              <input type="text" name="food" class="input" />
+            </div>
+            <div class="form-group">
+              <button type="submit">新增</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
