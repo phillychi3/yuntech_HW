@@ -7,7 +7,7 @@ readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.12"
 numpy = "*"
 matplotlib = "*"
 torch = "*"
@@ -15,6 +15,9 @@ torchvision = "*"
 torchaudio = "*"
 opencv-python = "^4.9.0.80"
 mediapipe = "^0.10.14"
+transformers = "^4.41.2"
+datasets = "^2.20.0"
+pyttsx3 = "^2.90"
 
 
 [tool.poetry.group.dev.dependencies]
