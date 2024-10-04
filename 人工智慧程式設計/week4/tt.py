@@ -1,5 +1,4 @@
 import numpy as NP
-import matplotlib.pyplot as PL
 from functools import reduce
 
 NP.set_printoptions(linewidth=30)

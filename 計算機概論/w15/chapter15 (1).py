@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import random
-import numpy as np
 
 # # Code from page 306
 def fib(n):

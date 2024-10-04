@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 v, h = np.array([1.0, 4, 9]), np.array([1.0, 3, 5, 7])
 n, m = v.sum() * h.sum() * 3, v.reshape(3, 1) * h.reshape(1, 4)

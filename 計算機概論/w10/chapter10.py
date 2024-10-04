@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import pprint
 # # Code from page 179
 class Toy(object):
     def __init__(self):
