@@ -1,6 +1,7 @@
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 # count = int(str[0])
 
@@ -39,4 +40,3 @@ str = [s.strip('\n') for s in str]
 
 # outdata = list(set(outdata))
 # print(len(outdata))
-

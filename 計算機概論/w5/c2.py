@@ -1,3 +1,3 @@
-L = [1,2,3]
+L = [1, 2, 3]
 L.append(L)
-print( L is L[-1] )
+print(L is L[-1])

@@ -1,2 +1,2 @@
-def is_in(x,y):
+def is_in(x, y):
     return x in y

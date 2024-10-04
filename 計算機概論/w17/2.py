@@ -27,7 +27,7 @@
 """
 
 while True:
-    try: 
+    try:
         max_w = 1000
         N = 1000
 
@@ -49,12 +49,12 @@ while True:
         for i in range(1, n + 1):
             for j in range(1, limW + 1):
                 # 如果當前背包容量不足以放下第i個物品
-                #則dp[i][j]繼承dp[i-1][j]的值
-                if j < w[i]: 
+                # 則dp[i][j]繼承dp[i-1][j]的值
+                if j < w[i]:
                     dp[i][j] = dp[i - 1][j]
                 # 如果能夠放下第i個物品，則取放下和不放的最大值
-                else: 
-                    dp[i][j] = max(dp[i - 1][j],dp[i - 1][j-w[i]]+v[i])
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - w[i]] + v[i])
 
         # 輸出最終的最大價值
         print(max(max(dp)))

@@ -1,7 +1,8 @@
 # 聯誼話題相親數
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 
 # def findallprime(n):
@@ -10,7 +11,6 @@ str = [s.strip('\n') for s in str]
 #         if n % i == 0:
 #             prime.append(i)
 #     return prime
-
 
 
 # for i in str:

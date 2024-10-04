@@ -6,4 +6,3 @@ try:
     print(max(data2))
 except:
     print(min(data))
-

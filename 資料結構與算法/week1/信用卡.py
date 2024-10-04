@@ -1,7 +1,9 @@
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
-data = str[0].replace('-', '')
+str = [s.strip("\n") for s in str]
+data = str[0].replace("-", "")
+
 
 def luhn(card_no):
     digits = [int(x) for x in reversed(card_no)]
@@ -14,12 +16,13 @@ def luhn(card_no):
     else:
         return False
 
+
 dd = luhn(data)
 if dd:
-    if data[0] == '4':
-        print('VISA')
-    elif data[0] == '5':
-        print('MASTER_CARD ')
-    
+    if data[0] == "4":
+        print("VISA")
+    elif data[0] == "5":
+        print("MASTER_CARD ")
+
 else:
-    print('INVALID')
+    print("INVALID")

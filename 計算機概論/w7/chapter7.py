@@ -11,7 +11,8 @@
 # # print(circle.sphere_surface(3))
 
 # Code from page 137
-from circle import * # Note that this will fail if path not set
+from circle import *  # Note that this will fail if path not set
+
 print(pi)
 print(circle.pi)
 
@@ -45,11 +46,13 @@ print(circle.pi)
 # print('In 2011', 'U.S. Thanksgiving was on November',
 #       find_thanksgiving(2011))
 
+
 # # Header for finger exercise on page 141
 def shopping_days(year):
     """year a number >= 1941
     returns the number of days between U.S. Thanksgiving and
     Christmas in year"""
+
 
 # # Code on page 142
 # name_handle = open('kids', 'w')
@@ -78,4 +81,3 @@ def shopping_days(year):
 # name_handle = open('kids', 'r')
 # for line in name_handle:
 #     print(line)
-

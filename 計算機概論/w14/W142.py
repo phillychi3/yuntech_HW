@@ -24,7 +24,7 @@ class Edge(object):
         return self._dest
 
     def __str__(self):
-        return self._src.get_name() + '->' + self._dest.get_name()
+        return self._src.get_name() + "->" + self._dest.get_name()
 
 
 class Weighted_edge(Edge):
@@ -38,8 +38,8 @@ class Weighted_edge(Edge):
         return self._weight
 
     def __str__(self):
-        return (f'{self._src.get_name()}->({self._weight})' +
-                f'{self._dest.get_name()}')
+        return f"{self._src.get_name()}->({self._weight})" + f"{self._dest.get_name()}"
+
 
 # # Figure 14-8 on page 296
 
@@ -53,7 +53,7 @@ class Digraph(object):
 
     def add_node(self, node):
         if node in self._nodes:
-            raise ValueError('Duplicate node')
+            raise ValueError("Duplicate node")
         else:
             self._nodes.append(node)
             self._edges[node] = []
@@ -62,7 +62,7 @@ class Digraph(object):
         src = edge.get_source()
         dest = edge.get_destination()
         if not (src in self._nodes and dest in self._nodes):
-            raise ValueError('Node not in graph')
+            raise ValueError("Node not in graph")
         self._edges[src].append(dest)
 
     def children_of(self, node):
@@ -72,11 +72,10 @@ class Digraph(object):
         return node in self._nodes
 
     def __str__(self):
-        result = ''
+        result = ""
         for src in self._nodes:
             for dest in self._edges[src]:
-                result = (result + src.get_name() + '->'
-                          + dest.get_name() + '\n')
+                result = result + src.get_name() + "->" + dest.get_name() + "\n"
         return result[:-1]  # omit final newline
 
 
@@ -86,33 +85,33 @@ class Graph(Digraph):
         rev = Edge(edge.get_destination(), edge.get_source())
         Digraph.add_edge(self, rev)
 
+
 # # Figure 14-9 on page 299
 
 
 def print_path(path):
     """Assumes path is a list of nodes"""
-    result = ''
+    result = ""
     for i in range(len(path)):
         result = result + str(path[i])
         if i != len(path) - 1:
-            result = result + '->'
+            result = result + "->"
     return result
 
 
 def DFS(graph, start, end, path, shortest, to_print=False):
     """Assumes graph is a Digraph; start and end are nodes;
-          path and shortest are lists of nodes
-       Returns a shortest path from start to end in graph"""
+       path and shortest are lists of nodes
+    Returns a shortest path from start to end in graph"""
     path = path + [start]
     if to_print:
-        print('Current DFS path:', print_path(path))
+        print("Current DFS path:", print_path(path))
     if start == end:
         return path
     for node in graph.children_of(start):
         if node not in path:  # avoid cycles
             if shortest == None or len(path) < len(shortest):
-                new_path = DFS(graph, node, end, path, shortest,
-                               to_print)
+                new_path = DFS(graph, node, end, path, shortest, to_print)
                 if new_path != None:
                     shortest = new_path
     return shortest
@@ -120,8 +119,9 @@ def DFS(graph, start, end, path, shortest, to_print=False):
 
 def shortest_path(graph, start, end, to_print=False):
     """Assumes graph is a Digraph; start and end are nodes
-       Returns a shortest path from start to end in graph"""
+    Returns a shortest path from start to end in graph"""
     return DFS(graph, start, end, [], None, to_print)
+
 
 # # Figure 14-10 on page 301
 
@@ -144,23 +144,24 @@ def test_SP():
     g.add_edge(Edge(nodes[3], nodes[1]))
     g.add_edge(Edge(nodes[4], nodes[0]))
     sp = shortest_path(g, nodes[0], nodes[5], to_print=True)
-    print('Shortest path found by DFS:', print_path(sp))
+    print("Shortest path found by DFS:", print_path(sp))
     sp = BFS(g, nodes[0], nodes[5], to_print=True)
-    print('Shortest path found by BFS:', print_path(sp))
+    print("Shortest path found by BFS:", print_path(sp))
+
 
 # # Figure 14-11 on page 303
 
 
 def BFS(graph, start, end, to_print=False):
     """Assumes graph is a Digraph; start and end are nodes
-       Returns a shortest path from start to end in graph"""
+    Returns a shortest path from start to end in graph"""
     init_path = [start]
     path_queue = [init_path]
     while len(path_queue) != 0:
         # Get and remove oldest element in path_queue
         tmp = path_queue.pop(0)
         if to_print:
-            print('Current BFS path:', print_path(tmp))
+            print("Current BFS path:", print_path(tmp))
         last_node = tmp[-1]
         if last_node == end:
             return tmp

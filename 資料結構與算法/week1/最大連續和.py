@@ -1,13 +1,14 @@
 # 最大連續和
 
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 ct = int(str[0])
 data = []
 for i in range(ct):
-    data.append(int(str[i+1]))
+    data.append(int(str[i + 1]))
 
 max = 0
 now = 0

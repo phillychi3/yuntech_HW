@@ -1,8 +1,9 @@
 # padend
 
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 strin = str[0]
 llen = str[1]
 pad = str[2]

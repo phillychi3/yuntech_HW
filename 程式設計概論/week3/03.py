@@ -9,4 +9,5 @@ def input_lol():
     else:
         print("梯形的面積為", (top + bottom) * height / 2)
 
+
 input_lol()

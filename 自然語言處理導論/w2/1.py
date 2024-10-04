@@ -4,7 +4,7 @@ import jieba.posseg as psg
 
 thispath = os.path.dirname(__file__)
 jieba.load_userdict(os.path.join(thispath, "dict.txt"))
-with open(os.path.join(thispath, "file.txt"),"r",encoding="utf8") as f:
+with open(os.path.join(thispath, "file.txt"), "r", encoding="utf8") as f:
     data = f.read()
 out = []
 

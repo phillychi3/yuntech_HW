@@ -12,11 +12,16 @@ import os
 # (2) index ((word to index): [ 4, 5, 89, 43]
 
 thispath = os.path.dirname(__file__)
-with open(os.path.join(thispath, "Yuntech_QA.txt"),"r",encoding="utf8") as f:
+with open(os.path.join(thispath, "Yuntech_QA.txt"), "r", encoding="utf8") as f:
     data = f.read()
 out = {}
 
-stopwords = {}.fromkeys([ line.rstrip() for line in open(os.path.join(thispath, "stopworld.txt"), encoding='utf8') ])
+stopwords = {}.fromkeys(
+    [
+        line.rstrip()
+        for line in open(os.path.join(thispath, "stopworld.txt"), encoding="utf8")
+    ]
+)
 
 for line in data.split("\n"):
     for x in jieba.cut(line):

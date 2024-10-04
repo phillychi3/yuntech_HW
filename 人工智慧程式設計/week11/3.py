@@ -15,7 +15,7 @@ delta = np.pi / 20
 
 def init_subplots():
     for ax in axes.flat:
-        ax.axis('equal')
+        ax.axis("equal")
         ax.set_xticks([])
         ax.set_yticks([])
         ax.spines[:].set_visible(False)
@@ -33,7 +33,7 @@ def animate(i):
     for ax_row in axes:
         for ax in ax_row:
             ax.cla()
-            ax.axis('equal')
+            ax.axis("equal")
             ax.set_xticks([])
             ax.set_yticks([])
             ax.spines[:].set_visible(False)

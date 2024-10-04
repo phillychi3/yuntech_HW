@@ -1,8 +1,9 @@
 # 聯誼訊系比大小
 
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 
 # count = int(str[0])
@@ -24,4 +25,3 @@ str = [s.strip('\n') for s in str]
 #             print('A')
 #         else:
 #             print('B')
-

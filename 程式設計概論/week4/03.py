@@ -3,7 +3,7 @@ ll.sort(reverse=True)
 ld = 1
 lct = 1
 print("分數\t排名")
-for ct,data  in enumerate(ll,1):
+for ct, data in enumerate(ll, 1):
     if ld == data:
         print(f"{lct}\t{data}")
     else:

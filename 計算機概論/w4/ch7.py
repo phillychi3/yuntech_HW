@@ -1,3 +1,3 @@
-test = 'testtt'
-print(test.find('t'))
-print(test.find('g'))
+test = "testtt"
+print(test.find("t"))
+print(test.find("g"))

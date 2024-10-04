@@ -1,11 +1,12 @@
 # 陣列最短距離
 
 import sys
-str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
 
-x = [int(i) for i in str[1].split(' ')]
-y = [int(i) for i in str[2].split(' ')]
+str = sys.stdin.readlines()
+str = [s.strip("\n") for s in str]
+
+x = [int(i) for i in str[1].split(" ")]
+y = [int(i) for i in str[2].split(" ")]
 
 min = 9999999999
 xi = 0

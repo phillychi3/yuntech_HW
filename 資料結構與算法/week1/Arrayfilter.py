@@ -1,12 +1,13 @@
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 
 target = str[0]
 ct = int(str[1])
 data = []
-for i in range(2, ct+2):
+for i in range(2, ct + 2):
     if str[i] != target:
         data.append(str[i])
 

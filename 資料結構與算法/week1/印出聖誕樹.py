@@ -4,7 +4,7 @@
 data = int(4)
 # 聖誕樹
 for i in range(data):
-    print(' '*(data-i-1)+'*'*(i+1) + '*'*i)
+    print(" " * (data - i - 1) + "*" * (i + 1) + "*" * i)
 # 樹根
-for i in range(1,data):
-    print(' '*(data-1)+"|")
+for i in range(1, data):
+    print(" " * (data - 1) + "|")

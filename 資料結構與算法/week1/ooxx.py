@@ -1,8 +1,9 @@
 # ooxx
 
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 # 判斷勝利
 map = [
     list(str[0]),
@@ -11,13 +12,12 @@ map = [
 ]
 
 
-
 # 判斷橫向
 for i in range(2):
     if map[i][0] == map[i][1] == map[i][2]:
         print(map[i][0])
         sys.exit()
-        
+
 # 判斷直向
 for i in range(2):
     if map[0][i] == map[1][i] == map[2][i]:
@@ -33,8 +33,4 @@ if map[0][2] == map[1][1] == map[2][0]:
 
 # 判斷平手
 
-print('DRAW')
-
-        
-
-    
+print("DRAW")

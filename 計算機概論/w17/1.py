@@ -31,14 +31,18 @@ def maxvalue(n, w, weight, value):
     """
     if n == 0 or w == 0:
         return 0
-    if weight[n-1] > w:
-        return maxvalue(n-1, w, weight, value)
+    if weight[n - 1] > w:
+        return maxvalue(n - 1, w, weight, value)
     else:
-        return max(maxvalue(n-1, w, weight, value), maxvalue(n-1, w-weight[n-1], weight, value)+value[n-1])
+        return max(
+            maxvalue(n - 1, w, weight, value),
+            maxvalue(n - 1, w - weight[n - 1], weight, value) + value[n - 1],
+        )
+
 
 while 1:
     try:
-        n, w = map(int, input().split())   
+        n, w = map(int, input().split())
         weight = []
         value = []
         for i in range(n):
@@ -49,4 +53,3 @@ while 1:
         print(maxvalue(n, w, weight, value))
     except:
         break
-

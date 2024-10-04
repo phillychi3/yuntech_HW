@@ -1,8 +1,9 @@
 # 逆序數對
 
 import sys
+
 str = sys.stdin.readlines()
-str = [s.strip('\n') for s in str]
+str = [s.strip("\n") for s in str]
 
 # str = str[1].split(' ')
 # thelist = [int(i) for i in str]
@@ -19,7 +20,6 @@ str = [s.strip('\n') for s in str]
 #     count += thelist.index(copy[i])
 #     thelist.remove(copy[i])
 # print(count)
-
 
 
 # import sys
@@ -55,8 +55,6 @@ str = [s.strip('\n') for s in str]
 #     result += left[i:]
 #     result += right[j:]
 #     return result
-
-
 
 
 # 分兩邊排序(數列)
