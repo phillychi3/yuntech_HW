@@ -3,7 +3,6 @@ null = "- "
 
 
 def get_ascii(base, count) -> str:
-    print(base, count)
     return " ".join(chr(base + i) for i in range(count)) + " "
 
 
