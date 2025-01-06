@@ -12,8 +12,9 @@ DROP TABLE IF EXISTS patients CASCADE;
 DROP TABLE IF EXISTS date CASCADE;
 DROP TABLE IF EXISTS doctor_leaves CASCADE;
 DROP TABLE IF EXISTS doctor_schedule CASCADE;
+DROP TABLE IF EXISTS operation_log CASCADE;
 
-
+-- 患者資料表
 CREATE TABLE patients (
     patient_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -26,7 +27,7 @@ CREATE TABLE patients (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 醫生資料表
 CREATE TABLE doctor (
     doctor_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -39,7 +40,7 @@ CREATE TABLE doctor (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 診間/病房資料表
 CREATE TABLE clinic (
     clinic_id SERIAL PRIMARY KEY,
     floor INTEGER NOT NULL,
@@ -49,7 +50,7 @@ CREATE TABLE clinic (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 日期資料表 (用於追蹤各種重要日期)
 CREATE TABLE date (
     date_id SERIAL PRIMARY KEY,
     date DATE NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE date (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 藥品資料表
 CREATE TABLE medicine (
     medication_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE medicine (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 處方箋資料表
 CREATE TABLE prescription (
     prescription_id SERIAL PRIMARY KEY,
     doctor_id INTEGER NOT NULL REFERENCES doctor(doctor_id),
@@ -83,7 +84,7 @@ CREATE TABLE prescription (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 處方藥品關聯表
 CREATE TABLE prescription_medicines (
     prescription_id INTEGER REFERENCES prescription(prescription_id),
     medication_id INTEGER REFERENCES medicine(medication_id),
@@ -94,7 +95,7 @@ CREATE TABLE prescription_medicines (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 預約掛號資料表
 CREATE TABLE appointments (
     appointment_id SERIAL PRIMARY KEY,
     doctor_id INTEGER NOT NULL REFERENCES doctor(doctor_id),
@@ -107,7 +108,7 @@ CREATE TABLE appointments (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 病歷紀錄資料表
 CREATE TABLE medical_records (
     appointment_id INTEGER PRIMARY KEY REFERENCES appointments(appointment_id),
     patient_id INTEGER NOT NULL REFERENCES patients(patient_id),
@@ -118,7 +119,7 @@ CREATE TABLE medical_records (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 檢查/檢驗資料表
 CREATE TABLE examination (
     examination_id SERIAL PRIMARY KEY,
     examination_name VARCHAR(100) NOT NULL,
@@ -129,7 +130,7 @@ CREATE TABLE examination (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 住院紀錄資料表
 CREATE TABLE admission_record (
     admission_id SERIAL PRIMARY KEY,
     clinic_id INTEGER NOT NULL REFERENCES clinic(clinic_id),
@@ -141,7 +142,7 @@ CREATE TABLE admission_record (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 醫療費用資料表
 CREATE TABLE medical_costs (
     cost_id SERIAL PRIMARY KEY,
     patient_id INTEGER NOT NULL REFERENCES patients(patient_id),
@@ -154,7 +155,7 @@ CREATE TABLE medical_costs (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-
+-- 醫生排班表
 CREATE TABLE doctor_schedule (
     schedule_id SERIAL PRIMARY KEY,
     doctor_id INTEGER NOT NULL REFERENCES doctor(doctor_id),
@@ -167,7 +168,7 @@ CREATE TABLE doctor_schedule (
     UNIQUE (doctor_id, weekday)
 );
 
-
+-- 醫生請假紀錄表
 CREATE TABLE doctor_leaves (
     leave_id SERIAL PRIMARY KEY,
     doctor_id INTEGER NOT NULL REFERENCES doctor(doctor_id),
@@ -178,6 +179,16 @@ CREATE TABLE doctor_leaves (
     UNIQUE (doctor_id, leave_date)
 );
 
+CREATE TABLE operation_log (
+    log_id SERIAL PRIMARY KEY,
+    user_id INTEGER,
+    table_name VARCHAR(50) NOT NULL,
+    operation_type VARCHAR(20) NOT NULL,
+    record_id INTEGER,
+    operation_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
 
 CREATE INDEX idx_patient_name ON patients(name);
 CREATE INDEX idx_doctor_name ON doctor(name);
@@ -185,6 +196,105 @@ CREATE INDEX idx_appointment_date ON appointments(appointment_date);
 CREATE INDEX idx_prescription_date ON prescription(prescription_date);
 CREATE INDEX idx_examination_date ON examination(examination_date);
 CREATE INDEX idx_medical_costs_deadline ON medical_costs(payment_deadline);
+
+
+CREATE OR REPLACE FUNCTION get_primary_key_column(p_table_name text)
+RETURNS text AS $$
+DECLARE
+    pk_column text;
+BEGIN
+    SELECT kcu.column_name INTO pk_column
+    FROM information_schema.table_constraints tc
+    JOIN information_schema.key_column_usage kcu
+        ON tc.constraint_name = kcu.constraint_name
+        AND tc.table_schema = kcu.table_schema
+    WHERE tc.constraint_type = 'PRIMARY KEY'
+        AND tc.table_name = p_table_name
+        AND tc.table_schema = 'public'
+    LIMIT 1;
+
+    RETURN pk_column;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION log_operation()
+RETURNS TRIGGER AS $$
+DECLARE
+    v_record_id INTEGER;
+    pk_column text;
+BEGIN
+    IF TG_TABLE_NAME = 'operation_log' THEN
+        RETURN NULL;
+    END IF;
+    pk_column := get_primary_key_column(TG_TABLE_NAME);
+
+
+    IF TG_OP IN ('INSERT', 'UPDATE') THEN
+        EXECUTE format('SELECT ($1).%I', pk_column)
+        USING NEW
+        INTO v_record_id;
+    ELSIF TG_OP = 'DELETE' THEN
+        EXECUTE format('SELECT ($1).%I', pk_column)
+        USING OLD
+        INTO v_record_id;
+    END IF;
+
+    INSERT INTO operation_log (
+        user_id,
+        table_name,
+        operation_type,
+        record_id,
+        operation_time
+    ) VALUES (
+        NULLIF(current_setting('app.user_id', TRUE), '')::INTEGER,
+        TG_TABLE_NAME,
+        TG_OP,
+        v_record_id,
+        CURRENT_TIMESTAMP
+    );
+
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE VIEW operation_log_view AS
+SELECT
+    log_id,
+    user_id,
+    table_name,
+    operation_type,
+    record_id,
+    operation_time
+FROM operation_log
+ORDER BY operation_time DESC;
+
+
+DO $$
+DECLARE
+    t text;
+    trigger_name text;
+BEGIN
+    FOR t IN
+        SELECT table_name
+        FROM information_schema.tables
+        WHERE table_schema = 'public'
+        AND table_type = 'BASE TABLE'
+    LOOP
+        trigger_name := t || '_log';
+        BEGIN
+            EXECUTE format('
+                CREATE TRIGGER %I
+                AFTER INSERT OR UPDATE OR DELETE ON %I
+                FOR EACH ROW
+                EXECUTE FUNCTION log_operation()',
+                trigger_name, t);
+        EXCEPTION WHEN OTHERS THEN
+            RAISE NOTICE '為表 % 創建觸發器失敗: %', t, SQLERRM;
+        END;
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION check_doctor_availability()
 RETURNS TRIGGER AS $$
